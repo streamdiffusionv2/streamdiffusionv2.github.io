@@ -177,6 +177,26 @@
     ]
   }
   </script>
+
+  <!-- 将样式放到<head>内，增强选择器优先级，确保覆盖Bulma默认样式 -->
+  <style>
+    .author-link {
+      color: #2563eb;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .author-link:hover,
+    .author-link:focus,
+    .author-link:active,
+    .author-link:focus-visible {
+      color: #1d4ed8;
+      outline: none !important;
+      box-shadow: none !important;
+      /* 完全移除所有手动加的下划线，仅保留框架自带的hover下划线效果 */
+      border-bottom: none !important;
+      text-decoration: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -194,9 +214,36 @@
           <div class="column has-text-centered">
             <!-- TODO: Replace with your paper title -->
             <h1 class="title is-1 publication-title">StreamDiffusionV2: An Open-Sourced Interactive Diffusion Pipeline for Streaming Applications</h1>
-            <!-- Authors moved to Contributors section at the bottom -->
 
-                  
+            <!-- Authors at top with affiliation markers -->
+            <div class="is-size-5 publication-authors">
+              <!-- 移除a标签的button/高亮框效果，直接用普通链接，并通过CSS去除focus/active边框 -->
+              <span class="author-block"><a href="https://jerryfeng2003.github.io/" target="_blank" class="author-link">Tianrui Feng</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://scholar.google.com/citations?user=C6kPjgwAAAAJ&hl" target="_blank" class="author-link">Zhi Li</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://haochengxi.github.io/" target="_blank" class="author-link">Haocheng Xi</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://lmxyy.me/" target="_blank" class="author-link">Muyang Li</a><sup>2</sup>,</span>
+              <span class="author-block"><a href="https://xiuyuli.com/" target="_blank" class="author-link">Xiuyu Li</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://andy-yang-1.github.io/" target="_blank" class="author-link">Shuo Yang</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://lllyasviel.github.io/lvmin_zhang/" target="_blank" class="author-link">Lvmin Zhang</a><sup>3</sup>,</span>
+              <span class="author-block"><a href="https://www.linkedin.com/in/kellyzpeng/" target="_blank" class="author-link">Kelly Peng</a><sup>4</sup>,</span>
+              <span class="author-block"><a href="https://hanlab.mit.edu/songhan" target="_blank" class="author-link">Song Han</a><sup>2</sup>,</span>
+              <span class="author-block"><a href="https://people.eecs.berkeley.edu/~keutzer/" target="_blank" class="author-link">Kurt Keutzer</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://scholar.google.com/citations?hl=ja&user=15X3cioAAAAJ" target="_blank" class="author-link">Akio Kodaira</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://www.chenfengx.com/" target="_blank" class="author-link">Chenfeng Xu</a><sup>5,†</sup></span>
+            </div>
+            <div class="is-size-6 affiliations-note">
+              <span><sup>1</sup> UC Berkeley</span> ·
+              <span><sup>2</sup> MIT</span> ·
+              <span><sup>3</sup> Stanford University</span> ·
+              <span><sup>4</sup> First Intelligence</span> ·
+              <span><sup>5</sup> UT Austin</span>
+            </div>
+            <!-- 通信作者和project lead信息 -->
+            <div class="has-text-centered" style="margin-top:0.5em;">
+              <span style="font-size:1rem;">
+                <sup>†</sup> Project lead, corresponding to <a href="mailto:xuchenfeng@utexas.edu">xuchenfeng@utexas.edu</a>
+              </span>
+            </div>
 
                   <div class="column has-text-centered">
                     <div class="publication-links">
@@ -244,9 +291,9 @@
                     <span>Code</span>
                   </a>
                 </span>
-                <p style="margin-top:0.75rem;color:#64748b;max-width:840px;text-align:left;">
+                <div class="hero-subtext" style="text-align:center; margin-top: 1.5em; margin-bottom: 1em;">
                   We are an open-source interactive diffusion project for real-time streaming applications — scalable across diverse GPU setups, supporting flexible denoising steps, and delivering high FPS for creators and platforms.
-                </p>
+                </div>
             </div>
           </div>
         </div>
@@ -267,17 +314,8 @@
         <div class="content has-text-justified">
           <!-- TODO: Replace with your paper abstract -->
           <p>
-            Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and
-            delivered. Our first release, StreamDiffusion, powered fast and creative image-based live-streaming products (e.g.,
-            Daydream, TouchDesigner) but hit limits on temporal consistency. Recent video diffusion models (e.g., CausVid)
-            offer smoothness and efficiency in offline video generation, yet it lack designs tailored to online live-streaming.
-            StreamDiffusionV2 closes that gap: a fully open-source, streaming-living pipeline for online interactive streams
-            with video diffusion models. It fuses StreamVAE, sinked rolling-KV, dynamic pipeline parallelism, and a motion-
-            aware noise controller to stay stable under high-speed motion. To cater to users at every level, StreamDiffusionV2
-            scales seamlessly across diverse GPU environments and supports flexible denoising steps (e.g., 1-4 steps). Without
-            TensorRT and quantization, StreamDiffusionV2 reaches 42 FPS on 4× H100 with a 4-step model, 17.6 (resp.
-            8.9) FPS on 2× (resp. single) RTX 4090 with a 1-step model—making state-of-the-art generative live streaming
-            practical and accessible from individual creators to enterprise platforms.
+            Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Our first release, StreamDiffusion, has powered efficient and creative live-streaming products (e.g., Daydream, TouchDesigner) but hit limits on temporal consistency due to the foundation of image-based designs.
+            Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline generation systems primarily optimize throughput by batching large workloads. In contrast, live online streaming faces strict real-time constraints with small batches: every frame must meet a per-frame deadline with low jitter. Moreover, the online system must dynamically adapt its workload (e.g. steps, resolution, effects) to track user query rates and sustain target throughput under varying load. We bridge the gap in live streaming video design with <strong>StreamDiffusionV2</strong>: a fully open-source real-time pipeline for interactive live streams with video diffusion models. StreamVAE, sinked rolling KV, dynamic pipeline parallelism, and a motion-aware noise controller to stay stable under dynamical inputs. To cater to users at every level, StreamDiffusionV2 scales seamlessly across diverse GPU environments and supports flexible denoising steps (e.g., 1–4 steps). Without TensorRT and quantization, StreamDiffusionV2 reaches 42 FPS on 4× H100 with a 4-step model, 17.6 (resp. 8.9) FPS on 2× (resp. single) RTX 4090 with a 1-step model—making state-of-the-art generative live streaming practical and accessible from individual creators to enterprise platforms.
           </p>
         </div>
       </div>
@@ -287,59 +325,68 @@
 <!-- End paper abstract -->
 
 
-<!-- Pipeline -->
-<section class="section">
+<!-- Methods -->
+<section class="section" id="methods">
   <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Pipeline Overview</h2>
-        <img src="static/images/pipeline.png" alt="Pipeline Overview" class="pipeline-image">
-        <div class="content has-text-justified">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths has-text-centered">
+        <h2 class="title is-3">Methods</h2>
+        <!-- 子标题左对齐，主标题不变 -->
+        <div class="has-text-left">
+          <h3 class="title is-4">Stream-living pipeline</h3>
+          <img src="static/images/pipeline.png" alt="The overview pipeline of our StreamDiffusionV2." class="pipeline-image">
+          <p class="figure-caption">Fig. 1: The overview pipeline of our StreamDiffusionV2.</p>
+          <div class="content has-text-justified">
+            <p>
+              StreamDiffusionV2 is a synergy of system- and algorithm-level efforts to achieve stream-living based on video diffusion models. It includes: A dynamic scheduler for pipeline parallelism with stream batch, a StreamVAE and rolling KV, and a motion-aware controller.
+            </p>
+          </div>
 
-          <!-- TODO: Replace with your paper abstract -->
-          <p>
-            [Overview text]
-          </p>
+          <h3 class="title is-4">Pipeline-parallelism Stream-batch</h3>
+          <img src="static/images/parallel.png" alt="The details description of our Pipeline-parallelism Stream-batch architecture." class="parallel-image">
+          <p class="figure-caption">Fig. 2: The details description of our Pipeline-parallelism Stream-batch architecture.</p>
+          <div class="content has-text-justified">
+            <p>
+              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 1. This approach significantly improves throughput, as shown in Fig. 3.
+            </p>
+            <p>
+              In addition to the static partition, we find that VAE encoding and decoding create an unequal distribution of tasks across GPUs. To enhance throughput, we propose a scheduler that reallocates blocks across devices dynamically using inference-time measurements. These methods allow for competitive real-time generation performance on standard GPUs, thus reducing the barrier for practical implementation.
+            </p>
+          </div>
+
+          <!-- FPS results as Fig. 3 moved here, before Stream-VAE -->
+          <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+          <p class="figure-caption">Fig. 3: FPS results of our system.</p>
+
+          <h3 class="title is-4">Stream-VAE</h3>
+          <div class="content has-text-justified">
+            <p>
+              Stream-VAE is a low-latency implementation of Video VAE for real-time video generation. Unlike current approaches, which process long video sequences and introduce significant latency, Stream-VAE handles a small video chunk each time. Specifically, four video frames are compressed into a single latent frame during the process. In addition, the cached features are utilized in every 3D convolution module of the VAE to maintain temporal consistency.  Stream-VAE ensures temporal consistency while supporting efficient live streaming generation.
+            </p>
+          </div>
+
+          <h3 class="title is-4">Rolling KV Cache and Sink Token</h3>
+          <div class="content has-text-justified">
+            <p>
+              We integrate Causal-DiT with Stream-VAE to enable live-streaming video generation. Our rolling KV cache design differs substantially in several aspects: (1) Instead of maintaining a long KV cache, we adopt a much shorter cache length and introduce sink tokens to preserve the generation style during rolling updates. (2) When the current frame's timestamp suppasses the set threshold, we reset it to prevent visual quality degradation from overly large RoPE positions or position indices exceeding the encoding limit. These mechanisms collectively enable our pipeline to achieve truly infinite-length video-to-video live-streaming generation while maintaining stable quality and consistent style.
+            </p>
+          </div>
+
+          <h3 class="title is-4">Motion-aware Noise Controller</h3>
+          <div class="content has-text-justified">
+            <p>
+              In live-streaming applications, high-speed motion frequently occurs, yet current video diffusion models struggle with such motion. To address this, we propose the Motion-aware Noise Controller, a training-free method that adapts noise rates based on input frame motion frequency. Specifically, we assess motion frequency by calculating the mean squared error (MSE) between successive frames and linearly map this to a noise rate using pre-determined statistical parameters. This method balances quality and movement continuity in live video-to-video live streaming.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End pipeline -->
-
-<!-- Parallel -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Pipeline-parallelism Stream-batch architecture</h2>
-        <img src="static/images/parallel.png" alt="parallel" class="parallel-image">
-        <div class="content has-text-justified">
-
-          <!-- TODO: Replace with your paper abstract -->
-          <p>
-            [Parallel text]
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End parallel -->
+<!-- End Methods -->
 
 
-<!-- FPS Results -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">FPS&nbsp;Results</h2>
-        <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End FPS Results -->
+ 
 
 
 <!-- Video Grid Layout -->
@@ -535,3 +582,4 @@
 
   </body>
   </html>
+  </body>  </html>
