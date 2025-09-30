@@ -364,6 +364,44 @@ body {
   text-decoration: underline;
 }
 
+/* Contributors cards */
+.contributors-section .contrib-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+.contributors-section .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+
+.contributors-section .name {
+  margin: 0.25rem 0 0;
+  font-weight: 700;
+}
+
+.contributors-section .name a {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.contributors-section .name a:hover {
+  color: var(--primary-color);
+}
+
+.contributors-section .affiliation {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
 /* BibTeX Styling */
 pre {
   background: var(--background-accent) !important;

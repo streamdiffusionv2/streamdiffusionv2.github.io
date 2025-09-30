@@ -1,0 +1,6 @@
+Tianrui Feng	static/images/authors/tianrui_feng.jpg
+Chenfeng Xu	static/images/authors/chenfeng_xu.jpeg
+Muyang Li	static/images/authors/muyang_li.jpg
+Shuo Yang	static/images/authors/shuo_yang.jpg
+Lvmin Zhang	static/images/authors/lvmin_zhang.jpg
+Song Han	static/images/authors/song_han.png
