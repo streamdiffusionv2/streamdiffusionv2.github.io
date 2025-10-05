@@ -234,8 +234,8 @@
               <span class="author-block"><a href="https://scholar.google.com/citations?user=C6kPjgwAAAAJ&hl" target="_blank" class="author-link">Zhi Li</a><sup>1</sup>,</span>
               <span class="author-block"><a href="https://haochengxi.github.io/" target="_blank" class="author-link">Haocheng Xi</a><sup>1</sup>,</span>
               <span class="author-block"><a href="https://lmxyy.me/" target="_blank" class="author-link">Muyang Li</a><sup>2</sup>,</span>
-              <span class="author-block"><a href="https://xiuyuli.com/" target="_blank" class="author-link">Xiuyu Li</a><sup>1</sup>,</span>
               <span class="author-block"><a href="https://andy-yang-1.github.io/" target="_blank" class="author-link">Shuo Yang</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://xiuyuli.com/" target="_blank" class="author-link">Xiuyu Li</a><sup>1</sup>,</span>
               <span class="author-block"><a href="https://lllyasviel.github.io/lvmin_zhang/" target="_blank" class="author-link">Lvmin Zhang</a><sup>3</sup>,</span>
               <span class="author-block"><a href="https://www.linkedin.com/in/kellyzpeng/" target="_blank" class="author-link">Kelly Peng</a><sup>4</sup>,</span>
               <span class="author-block"><a href="https://hanlab.mit.edu/songhan" target="_blank" class="author-link">Song Han</a><sup>2</sup>,</span>
@@ -431,13 +431,16 @@
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Video Transfer Demo</h2>
+    <h3 class="title is-5" style="margin-top: 1.5em;">Comparison: Effect of Sink Token and Noise Controller</h3>
+    <p class="has-text-centered" style="margin-bottom: 1.5em;">
+      The left one shows video-to-video generation without sink token and noise controller strategies, while the right one is our result. Our method maintains style and temporal consistency significantly.
+    </p>
     <div class="columns is-multiline is-centered">
-      <!-- demo-7 两个并排 -->
       <div class="column is-half">
         <div class="video-card">
           <div class="video-container">
             <video controls muted loop preload="metadata" class="demo-video">
-              <source src="static/videos/boxing.mp4" type="video/mp4">
+              <source src="static/videos/boxing_causvid.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>
@@ -453,8 +456,11 @@
           </div>
         </div>
       </div>
-    <h3 class="title is-4">Various Prompts</h3>
-    <!-- UCLA Demo 8-grid: ucla-1 到 ucla-8，每行四个，共两行 -->
+    </div>
+    <h3 class="title is-5" style="margin-top: 2.5em;">Fancy Results with Diverse Prompts</h3>
+    <p class="has-text-centered" style="margin-bottom: 1.5em;">
+      The following demos demonstrate our method generating fancy and visually appealing results for the same video under various complex prompts.
+    </p>
     <div class="columns is-multiline is-centered">
       <div class="column is-one-quarter">
         <div class="video-card">
@@ -537,7 +543,11 @@
         </div>
       </div>
     </div>
-      <!-- demo-2 和 demo-4 两个并排 -->
+    <h3 class="title is-5" style="margin-top: 2.5em;">Animal-Centric Video Transfer</h3>
+    <p class="has-text-centered" style="margin-bottom: 1.5em;">
+      Our method also produces interesting and high-quality results on videos where animals are the main subject.
+    </p>
+    <div class="columns is-multiline is-centered">
       <div class="column is-half">
         <div class="video-card">
           <div class="video-container">
@@ -562,12 +572,15 @@
   </div>
 </section>
 
-<!-- Video Grid Layout -->
+<!-- Live-Streaming Demo -->
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full">
         <h2 class="title is-3">Live-Streaming Demo</h2>
+        <p class="has-text-centered" style="margin-bottom: 2em;">
+          The following two videos demonstrate real-time live-streaming, where the input is directly captured from a camera.
+        </p>
         <div class="columns is-multiline">
           <div class="column is-full">
             <div class="video-card">
