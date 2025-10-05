@@ -196,6 +196,18 @@
       border-bottom: none !important;
       text-decoration: none !important;
     }
+
+    .container.is-max-desktop {
+      max-width: 1200px !important; /* 你可以改成1600px或更大 */
+    }
+
+    .demo-video-large {
+      width: 70%;      /* 或者你可以设置为固定像素，如 800px */
+      max-width: 70%;  /* 保证不会超出父容器 */
+      height: auto;     /* 保持宽高比 */
+      display: block;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
@@ -289,28 +301,45 @@
               -->
 
               <!-- 保留代码按钮展示 -->
-                  <!-- TODO: Replace with your GitHub repository URL -->
-                  <span class="link-block">
-                    <a href="https://github.com/chenfengxu714/StreamDiffusionV2" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
-                <div class="hero-subtext" style="text-align:center; margin-top: 1.5em; margin-bottom: 1em;">
-                  We are an open-source interactive diffusion project for real-time streaming applications — scalable across diverse GPU setups, supporting flexible denoising steps, and delivering high FPS for creators and platforms.
-                </div>
+                <!-- TODO: Replace with your GitHub repository URL -->
+                <span class="link-block">
+                  <a href="https://github.com/chenfengxu714/StreamDiffusionV2" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <div>
+                We are an open-source interactive diffusion project for real-time streaming applications — scalable across diverse GPU setups, supporting flexible denoising steps, and delivering high FPS for creators and platforms.
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </section>
 
-
+<!-- 在Abstract前插入一个 demo-7 视频（不影响原有内容） -->
+<section class="section" style="padding-bottom: 0.5rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video-large">
+              <source src="static/videos/boxing.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
  
 
 <!-- Paper abstract -->
@@ -333,6 +362,7 @@
 <!-- End paper abstract -->
 
 
+
 <!-- Methods -->
 <section class="section" id="methods">
   <div class="container is-max-desktop">
@@ -351,11 +381,11 @@
           </div>
 
           <h3 class="title is-4">Pipeline-parallelism Stream-batch</h3>
-          <img src="static/images/parallel.png" alt="The details description of our Pipeline-parallelism Stream-batch architecture." class="parallel-image">
-          <p class="figure-caption">Fig. 2: The details description of our Pipeline-parallelism Stream-batch architecture.</p>
+          <img src="static/images/parallel.png" alt="The detailed description of our Pipeline-parallelism Stream-batch architecture." class="parallel-image">
+          <p class="figure-caption">Fig. 2: The detailed description of our Pipeline-parallelism Stream-batch architecture.</p>
           <div class="content has-text-justified">
             <p>
-              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 1. This approach significantly improves throughput, as shown in Fig. 3.
+              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 2. This approach significantly improves throughput, as shown in Fig. 3.
             </p>
             <p>
               In addition to the static partition, we find that VAE encoding and decoding create an unequal distribution of tasks across GPUs. To enhance throughput, we propose a scheduler that reallocates blocks across devices dynamically using inference-time measurements. These methods allow for competitive real-time generation performance on standard GPUs, thus reducing the barrier for practical implementation.
@@ -394,8 +424,143 @@
 <!-- End Methods -->
 
 
- 
 
+
+
+<!-- Video Transfer Demo -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Video Transfer Demo</h2>
+    <div class="columns is-multiline is-centered">
+      <!-- demo-7 两个并排 -->
+      <div class="column is-half">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/boxing.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/boxing.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    <h3 class="title is-4">Various Prompts</h3>
+    <!-- UCLA Demo 8-grid: ucla-1 到 ucla-8，每行四个，共两行 -->
+    <div class="columns is-multiline is-centered">
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-3.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-4.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-5.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-6.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-7.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/ucla-8.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- demo-2 和 demo-4 两个并排 -->
+      <div class="column is-half">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/bird.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted loop preload="metadata" class="demo-video">
+              <source src="static/videos/cat.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Video Grid Layout -->
 <section class="section">
@@ -407,7 +572,7 @@
           <div class="column is-full">
             <div class="video-card">
               <div class="video-container">
-                <video controls muted loop preload="metadata" class="demo-video">
+                <video controls muted loop preload="metadata" class="demo-video-large">
                   <source src="static/videos/demo-1.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
@@ -417,61 +582,8 @@
           <div class="column is-full">
             <div class="video-card">
               <div class="video-container">
-                <video controls muted loop preload="metadata" class="demo-video">
-                  <source src="static/videos/demo-6.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h2 class="title is-3" style="margin-top:2.5rem;">Video Transfer Demo</h2>
-        <div class="columns is-multiline">
-          <div class="column is-full">
-            <div class="video-card">
-              <div class="video-container">
-                <video controls muted loop preload="metadata" class="demo-video">
-                  <source src="static/videos/demo-9.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-          </div>
-          <div class="column is-full">
-            <div class="video-card">
-              <div class="video-container">
-                <video controls muted loop preload="metadata" class="demo-video">
+                <video controls muted loop preload="metadata" class="demo-video-large">
                   <source src="static/videos/demo-2.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-          </div>
-          <div class="column is-full">
-            <div class="video-card">
-              <div class="video-container">
-                <video controls muted loop preload="metadata" class="demo-video">
-                  <source src="static/videos/demo-8.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-          </div>
-          <div class="column is-full">
-            <div class="video-card">
-              <div class="video-container">
-                <video controls muted loop preload="metadata" class="demo-video">
-                  <source src="static/videos/demo-7.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-          </div>
-          <div class="column is-full">
-            <div class="video-card">
-              <div class="video-container">
-                <video controls muted loop preload="metadata" class="demo-video">
-                  <source src="static/videos/demo-4.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -483,11 +595,6 @@
   </div>
 </section>
 <!-- End demo -->
-
-
-
-<!-- FPS Results (duplicate cleanup) -->
-
 
 <!-- Contributors Section -->
 <section class="section contributors-section">
