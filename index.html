@@ -338,6 +338,9 @@
         </div>
       </div>
     </div>
+    <span style="font-size: 0.85rem; color: #666; display: block; margin-top: 0.5em; text-align: center;">
+      Notice: All demos are running on a remote server, and the slight stuttering in the videos is due to network transmission delays (50-300 ms).
+    </span>
   </div>
 </section>
  
@@ -583,7 +586,7 @@
           <p class="figure-caption">Fig. 2: The detailed description of our Pipeline-parallelism Stream-batch architecture.</p>
           <div class="content has-text-justified">
             <p>
-              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 2. This approach significantly improves throughput, as shown in Fig. 3.
+              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 2. This approach significantly improves throughput, as shown in Fig. 3 and Fig. 4.
             </p>
             <p>
               In addition to the static partition, we find that VAE encoding and decoding create an unequal distribution of tasks across GPUs. To enhance throughput, we propose a scheduler that reallocates blocks across devices dynamically using inference-time measurements. These methods allow for competitive real-time generation performance on standard GPUs, thus reducing the barrier for practical implementation.
@@ -592,7 +595,10 @@
 
           <!-- FPS results as Fig. 3 moved here, before Stream-VAE -->
           <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
-          <p class="figure-caption">Fig. 3: FPS results of our system.</p>
+          <p class="figure-caption">Fig. 3: FPS results of our system on H100 (with NVLink) and RTX 4090 GPUs (without NVLink), evaluated at a resolution of 832 &times; 480.</p>
+
+          <img src="static/images/fps_results_512.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
+          <p class="figure-caption">Fig. 4: FPS results of our system on H100 (with NVLink) and RTX 4090 GPUs (without NVLink), evaluated at a resolution of 512 &times; 512. This resolution is used in all Web UI demos.</p>
 
           <h3 class="title is-4">Stream-VAE</h3>
           <div class="content has-text-justified">
