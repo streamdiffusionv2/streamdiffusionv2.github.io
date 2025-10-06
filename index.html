@@ -312,7 +312,7 @@
                 </a>
               </span>
               <div>
-                We are an open-source interactive diffusion project for real-time streaming applications — scalable across diverse GPU setups, supporting flexible denoising steps, and delivering high FPS for creators and platforms.
+                StreamDiffusionV2 is an open-source interactive streaminng system for real-time diffusion generation — scalable across diverse GPU setups, supporting flexible denoising steps, and delivering high FPS for creators and platforms.
               </div>
             </div>
           </div>
@@ -343,16 +343,26 @@
  
 
 <!-- Paper abstract -->
+<!-- Paper abstract -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <!-- TODO: Replace with your paper abstract -->
           <p>
-            Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Our first release, StreamDiffusion, has powered efficient and creative live-streaming products (e.g., Daydream, TouchDesigner) but hit limits on temporal consistency due to the foundation of image-based designs.
-            Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline generation systems primarily optimize throughput by batching large workloads. In contrast, live online streaming faces strict real-time constraints with small batches: every frame must meet a per-frame deadline with low jitter. Moreover, the online system must dynamically adapt its workload (e.g. steps, resolution, effects) to track user query rates and sustain target throughput under varying load. We bridge the gap in live streaming video design with <strong>StreamDiffusionV2</strong>: a fully open-source real-time pipeline for interactive live streams with video diffusion models. StreamVAE, sinked rolling KV, dynamic pipeline parallelism, and a motion-aware noise controller to stay stable under dynamical inputs. To cater to users at every level, StreamDiffusionV2 scales seamlessly across diverse GPU environments and supports flexible denoising steps (e.g., 1–4 steps). Without TensorRT and quantization, StreamDiffusionV2 reaches 42 FPS on 4× H100 with a 4-step model, 17.6 (resp. 8.9) FPS on 2× (resp. single) RTX 4090 with a 1-step model—making state-of-the-art generative live streaming practical and accessible from individual creators to enterprise platforms.
+            Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Our first release, 
+            <a href="https://github.com/cumulo-autumn/StreamDiffusion" target="_blank" rel="noopener">StreamDiffusion</a>, 
+            has powered efficient and creative live-streaming products (e.g., Daydream, TouchDesigner) but hit limits on temporal consistency due to its image-based design. 
+            Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline systems primarily optimize throughput via large-batch processing. 
+            In contrast, live online streaming faces strict real-time constraints with small batches: every frame must meet a per-frame deadline with low jitter. Moreover, the online system must dynamically adapt its workload (e.g., steps, resolution, effects) to track user query rates and sustain target throughput under varying load.
+          </p>
+
+          <p>
+            We bridge this gap with <strong>StreamDiffusionV2</strong>: a fully open-source, real-time pipeline for interactive live streams with video diffusion models. 
+            The system introduces StreamVAE, synced rolling KV, dynamic pipeline parallelism, and a motion-aware noise controller to remain stable under dynamic inputs. 
+            To serve users across hardware tiers, StreamDiffusionV2 scales seamlessly across diverse GPU environments and supports flexible denoising steps (e.g., 1–4 steps). 
+            Without TensorRT or quantization, StreamDiffusionV2 reaches 42 FPS on 4× H100 with a 4-step model, and 17.6 (resp. 8.9) FPS on 2× (resp. single) RTX 4090 with a 1-step model—making state-of-the-art generative live streaming practical and accessible, from individual creators to enterprise platforms.
           </p>
         </div>
       </div>
