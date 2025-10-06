@@ -351,18 +351,21 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Our first release, 
-            <strong><a href="https://github.com/cumulo-autumn/StreamDiffusion" target="_blank" rel="noopener">StreamDiffusion</a></strong>, 
-            has powered efficient and creative live-streaming products (e.g., Daydream, TouchDesigner) but hit limits on temporal consistency due to its image-based design. 
-            Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline systems primarily optimize throughput via large-batch processing. 
-            In contrast, live online streaming faces strict real-time constraints with small batches: every frame must meet a per-frame deadline with low jitter. Moreover, the online system must dynamically adapt its workload (e.g., steps, resolution, effects) to track user query rates and sustain target throughput under varying load.
-          </p>
+  Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Our first release, 
+  <strong><a href="https://github.com/cumulo-autumn/StreamDiffusion" target="_blank" rel="noopener">StreamDiffusion</a></strong>, 
+  has powered efficient and creative live-streaming products (e.g., 
+  <a href="https://daydream.live/?utm_source=LivepeerWebsite" target="_blank" rel="noopener">Daydream</a>, 
+  <a href="https://derivative.ca/tags/streamdiffusionTouchDesigner" target="_blank" rel="noopener">TouchDesigner</a>) but hit limits on temporal consistency due to its image-based design. 
+  Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline systems primarily optimize throughput via large-batch processing. 
+  In contrast, live online streaming faces strict real-time constraints with small batches: every frame must meet a per-frame deadline with low jitter. Moreover, the online system must dynamically adapt its workload (e.g., steps, resolution, effects) to track user query rates and sustain target throughput under varying load.
+</p>
+
 
           <p>
             We bridge this gap with <strong>StreamDiffusionV2</strong>: a fully open-source, real-time pipeline for interactive live streams with video diffusion models. 
             The system introduces StreamVAE, synced rolling KV, dynamic pipeline parallelism, and a motion-aware noise controller to remain stable under dynamic inputs. 
             To serve users across hardware tiers, StreamDiffusionV2 scales seamlessly across diverse GPU environments and supports flexible denoising steps (e.g., 1–4 steps). 
-            Without TensorRT or quantization, StreamDiffusionV2 reaches 42 FPS on 4× H100 with a 4-step model, and 17.6 (resp. 8.9) FPS on 2× (resp. single) RTX 4090 with a 1-step model—making state-of-the-art generative live streaming practical and accessible, from individual creators to enterprise platforms.
+            Without TensorRT or quantization, StreamDiffusionV2 reaches 42 FPS on 4× H100 with a 4-step model, and 16.6 (resp. 8.6) FPS on 2× (resp. single) RTX 4090 with a 1-step model—making state-of-the-art generative live streaming practical and accessible, from individual creators to enterprise platforms.
           </p>
         </div>
       </div>
