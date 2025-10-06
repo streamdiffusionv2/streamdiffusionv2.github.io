@@ -312,7 +312,7 @@
                 </a>
               </span>
               <div>
-                StreamDiffusionV2 is an open-source interactive streaminng system for real-time diffusion generation — scalable across diverse GPU setups, supporting flexible denoising steps, and delivering high FPS for creators and platforms.
+                StreamDiffusionV2 is an open-source interactive streaming system for real-time diffusion generation — scalable across diverse GPU setups, supporting flexible denoising steps, and delivering high FPS for creators and platforms.
               </div>
             </div>
           </div>
@@ -352,7 +352,7 @@
         <div class="content has-text-justified">
           <p>
             Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Our first release, 
-            <a href="https://github.com/cumulo-autumn/StreamDiffusion" target="_blank" rel="noopener">StreamDiffusion</a>, 
+            <strong><a href="https://github.com/cumulo-autumn/StreamDiffusion" target="_blank" rel="noopener">StreamDiffusion</a></strong>, 
             has powered efficient and creative live-streaming products (e.g., Daydream, TouchDesigner) but hit limits on temporal consistency due to its image-based design. 
             Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline systems primarily optimize throughput via large-batch processing. 
             In contrast, live online streaming faces strict real-time constraints with small batches: every frame must meet a per-frame deadline with low jitter. Moreover, the online system must dynamically adapt its workload (e.g., steps, resolution, effects) to track user query rates and sustain target throughput under varying load.
@@ -373,66 +373,6 @@
 
 
 
-<!-- Methods -->
-<section class="section" id="methods">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-four-fifths has-text-centered">
-        <h2 class="title is-3">Methods</h2>
-        <!-- 子标题左对齐，主标题不变 -->
-        <div class="has-text-left">
-          <h3 class="title is-4">Stream-living pipeline</h3>
-          <img src="static/images/pipeline.png" alt="The overview pipeline of our StreamDiffusionV2." class="pipeline-image">
-          <p class="figure-caption">Fig. 1: The overview pipeline of our StreamDiffusionV2.</p>
-          <div class="content has-text-justified">
-            <p>
-              StreamDiffusionV2 is a synergy of system- and algorithm-level efforts to achieve stream-living based on video diffusion models. It includes: A dynamic scheduler for pipeline parallelism with stream batch, a StreamVAE and rolling KV, and a motion-aware controller.
-            </p>
-          </div>
-
-          <h3 class="title is-4">Pipeline-parallelism Stream-batch</h3>
-          <img src="static/images/parallel.png" alt="The detailed description of our Pipeline-parallelism Stream-batch architecture." class="parallel-image">
-          <p class="figure-caption">Fig. 2: The detailed description of our Pipeline-parallelism Stream-batch architecture.</p>
-          <div class="content has-text-justified">
-            <p>
-              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 2. This approach significantly improves throughput, as shown in Fig. 3.
-            </p>
-            <p>
-              In addition to the static partition, we find that VAE encoding and decoding create an unequal distribution of tasks across GPUs. To enhance throughput, we propose a scheduler that reallocates blocks across devices dynamically using inference-time measurements. These methods allow for competitive real-time generation performance on standard GPUs, thus reducing the barrier for practical implementation.
-            </p>
-          </div>
-
-          <!-- FPS results as Fig. 3 moved here, before Stream-VAE -->
-          <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
-          <p class="figure-caption">Fig. 3: FPS results of our system.</p>
-
-          <h3 class="title is-4">Stream-VAE</h3>
-          <div class="content has-text-justified">
-            <p>
-              Stream-VAE is a low-latency implementation of Video VAE for real-time video generation. Unlike current approaches, which process long video sequences and introduce significant latency, Stream-VAE handles a small video chunk each time. Specifically, four video frames are compressed into a single latent frame during the process. In addition, the cached features are utilized in every 3D convolution module of the VAE to maintain temporal consistency.  Stream-VAE ensures temporal consistency while supporting efficient live streaming generation.
-            </p>
-          </div>
-
-          <h3 class="title is-4">Rolling KV Cache and Sink Token</h3>
-          <div class="content has-text-justified">
-            <p>
-              We integrate Causal-DiT with Stream-VAE to enable live-streaming video generation. Our rolling KV cache design differs substantially in several aspects: (1) Instead of maintaining a long KV cache, we adopt a much shorter cache length and introduce sink tokens to preserve the generation style during rolling updates. (2) When the current frame's timestamp surpasses the set threshold, we reset it to prevent visual quality degradation from overly large RoPE positions or position indices exceeding the encoding limit. These mechanisms collectively enable our pipeline to achieve truly infinite-length video-to-video live-streaming generation while maintaining stable quality and consistent style.
-            </p>
-          </div>
-
-          <h3 class="title is-4">Motion-aware Noise Controller</h3>
-          <div class="content has-text-justified">
-            <p>
-              In live-streaming applications, high-speed motion frequently occurs, yet current video diffusion models struggle with such motion. To address this, we propose the Motion-aware Noise Controller, a training-free method that adapts noise rates based on input frame motion frequency. Specifically, we assess motion frequency by calculating the mean squared error (MSE) between successive frames and linearly map this to a noise rate using pre-determined statistical parameters. This method balances quality and movement continuity in live video-to-video live streaming.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Methods -->
-
 
 
 
@@ -440,10 +380,10 @@
 <!-- Video Transfer Demo -->
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Video Transfer Demo</h2>
-    <h3 class="title is-5" style="margin-top: 1.5em;">Comparison: Effect of Sink Token and Noise Controller</h3>
+    <h2 class="title is-3 has-text-centered">Online Streaming Video2Video Transformation</h2>
+    <h3 class="title is-5" style="margin-top: 1.5em;"> StreamDiffusionV2 robustly supports fast-motion video transfer.</h3>
     <p class="has-text-centered" style="margin-bottom: 1.5em;">
-      The left one shows video-to-video generation without sink token and noise controller strategies, while the right one is our result. Our method maintains style and temporal consistency significantly.
+      Left: CausVid adapted for streaming. Right: StreamDiffusionV2. Our method maintains style and temporal consistency to a much greater extent.
     </p>
     <div class="columns is-multiline is-centered">
       <div class="column is-half">
@@ -467,9 +407,9 @@
         </div>
       </div>
     </div>
-    <h3 class="title is-5" style="margin-top: 2.5em;">Fancy Results with Diverse Prompts</h3>
+    <h3 class="title is-5" style="margin-top: 2.5em;"> StreamDiffusionV2 robustly supports diverse and complex prompts.</h3>
     <p class="has-text-centered" style="margin-bottom: 1.5em;">
-      The following demos demonstrate our method generating fancy and visually appealing results for the same video under various complex prompts.
+     
     </p>
     <div class="columns is-multiline is-centered">
       <div class="column is-one-quarter">
@@ -553,9 +493,9 @@
         </div>
       </div>
     </div>
-    <h3 class="title is-5" style="margin-top: 2.5em;">Animal-Centric Video Transfer</h3>
+    <h3 class="title is-5" style="margin-top: 2.5em;">Animal-Centric Video Transfer, let your pet begin Live Stream!</h3>
     <p class="has-text-centered" style="margin-bottom: 1.5em;">
-      Our method also produces interesting and high-quality results on videos where animals are the main subject.
+       StreamDiffusionV2 is ready for your pets real-time Live Stream, the video is captured directly from a camera and processed in real-time for pet youtuber!
     </p>
     <div class="columns is-multiline is-centered">
       <div class="column is-half">
@@ -581,36 +521,33 @@
     </div>
   </div>
 </section>
-
 <!-- Live-Streaming Demo -->
 <section class="section">
   <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full">
-        <h2 class="title is-3">Live-Streaming Demo</h2>
-        <p class="has-text-centered" style="margin-bottom: 2em;">
-          The following two videos demonstrate real-time live-streaming, where the input is directly captured from a camera.
-        </p>
-        <div class="columns is-multiline">
-          <div class="column is-full">
-            <div class="video-card">
-              <div class="video-container">
-                <video controls muted autoplay loop preload="metadata" class="demo-video-large">
-                  <source src="static/videos/demo-1.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
+    <h3 class="title is-5" style="margin-top: 2.5em;">Human-Centric Video Transfer, let's begin your Live Stream!</h3>
+    <p class="has-text-centered" style="margin-bottom: 1.5em;">
+     StreamDiffusionV2 is ready for your real-time Live Stream, the video is captured directly from a camera and processed in real-time for youtuber!
+    </p>
+
+    <div class="columns is-multiline is-centered">
+      <div class="column is-half">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/demo-1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
           </div>
-          <div class="column is-full">
-            <div class="video-card">
-              <div class="video-container">
-                <video controls muted autoplay loop preload="metadata" class="demo-video-large">
-                  <source src="static/videos/demo-2.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/demo-2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
       </div>
@@ -619,108 +556,67 @@
 </section>
 <!-- End demo -->
 
-<!-- Contributors Section -->
-<section class="section contributors-section">
+
+
+<!-- Methods -->
+<section class="section" id="methods">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
-      <div class="column is-full has-text-centered">
-        <h2 class="title is-3">Core Contributors</h2>
-        <div class="columns is-multiline is-centered">
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/tianrui_feng.jpg" alt="Tianrui Feng">
-              <h3 class="name"><a href="https://jerryfeng2003.github.io/" target="_blank">Tianrui Feng</a></h3>
-              <div class="affiliation">UC Berkeley</div>
-            </div>
+      <div class="column is-four-fifths has-text-centered">
+        <h2 class="title is-3">Methods</h2>
+        <!-- 子标题左对齐，主标题不变 -->
+        <div class="has-text-left">
+          <h3 class="title is-4">Stream-living pipeline</h3>
+          <img src="static/images/pipeline.png" alt="The overview pipeline of our StreamDiffusionV2." class="pipeline-image">
+          <p class="figure-caption">Fig. 1: The overview pipeline of our StreamDiffusionV2.</p>
+          <div class="content has-text-justified">
+            <p>
+              StreamDiffusionV2 is a synergy of system- and algorithm-level efforts to achieve stream-living based on video diffusion models. It includes: A dynamic scheduler for pipeline parallelism with stream batch, a StreamVAE and rolling KV, and a motion-aware controller.
+            </p>
           </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/chenfeng_xu.jpeg" alt="Chenfeng Xu">
-              <h3 class="name"><a href="https://www.chenfengx.com/" target="_blank">Chenfeng Xu</a></h3>
-              <div class="affiliation">UT Austin</div>
-            </div>
-          </div>
-        </div>
 
-        <h2 class="title is-3" style="margin-top:2rem;">Contributors</h2>
-        <div class="columns is-multiline is-centered">
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/zhi_li.jpeg" alt="Zhi Li">
-              <h3 class="name"><a href="https://scholar.google.com/citations?user=C6kPjgwAAAAJ&hl" target="_blank">Zhi Li</a></h3>
-              <div class="affiliation">UC Berkeley</div>
-            </div>
+          <h3 class="title is-4">Pipeline-parallelism Stream-batch</h3>
+          <img src="static/images/parallel.png" alt="The detailed description of our Pipeline-parallelism Stream-batch architecture." class="parallel-image">
+          <p class="figure-caption">Fig. 2: The detailed description of our Pipeline-parallelism Stream-batch architecture.</p>
+          <div class="content has-text-justified">
+            <p>
+              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 2. This approach significantly improves throughput, as shown in Fig. 3.
+            </p>
+            <p>
+              In addition to the static partition, we find that VAE encoding and decoding create an unequal distribution of tasks across GPUs. To enhance throughput, we propose a scheduler that reallocates blocks across devices dynamically using inference-time measurements. These methods allow for competitive real-time generation performance on standard GPUs, thus reducing the barrier for practical implementation.
+            </p>
           </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/haocheng_xi.png" alt="Haocheng Xi">
-              <h3 class="name"><a href="https://haochengxi.github.io/" target="_blank">Haocheng Xi</a></h3>
-              <div class="affiliation">UC Berkeley</div>
-            </div>
+
+          <!-- FPS results as Fig. 3 moved here, before Stream-VAE -->
+          <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
+          <p class="figure-caption">Fig. 3: FPS results of our system.</p>
+
+          <h3 class="title is-4">Stream-VAE</h3>
+          <div class="content has-text-justified">
+            <p>
+              Stream-VAE is a low-latency implementation of Video VAE for real-time video generation. Unlike current approaches, which process long video sequences and introduce significant latency, Stream-VAE handles a small video chunk each time. Specifically, four video frames are compressed into a single latent frame during the process. In addition, the cached features are utilized in every 3D convolution module of the VAE to maintain temporal consistency.  Stream-VAE ensures temporal consistency while supporting efficient live streaming generation.
+            </p>
           </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/muyang_li.jpg" alt="Muyang Li">
-              <h3 class="name"><a href="https://lmxyy.me/" target="_blank">Muyang Li</a></h3>
-              <div class="affiliation">MIT</div>
-            </div>
+
+          <h3 class="title is-4">Rolling KV Cache and Sink Token</h3>
+          <div class="content has-text-justified">
+            <p>
+              We integrate Causal-DiT with Stream-VAE to enable live-streaming video generation. Our rolling KV cache design differs substantially in several aspects: (1) Instead of maintaining a long KV cache, we adopt a much shorter cache length and introduce sink tokens to preserve the generation style during rolling updates. (2) When the current frame's timestamp surpasses the set threshold, we reset it to prevent visual quality degradation from overly large RoPE positions or position indices exceeding the encoding limit. These mechanisms collectively enable our pipeline to achieve truly infinite-length video-to-video live-streaming generation while maintaining stable quality and consistent style.
+            </p>
           </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/xiuyu_li.png" alt="Xiuyu Li">
-              <h3 class="name"><a href="https://xiuyuli.com/" target="_blank">Xiuyu Li</a></h3>
-              <div class="affiliation">UC Berkeley</div>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/shuo_yang.jpg" alt="Shuo Yang">
-              <h3 class="name"><a href="https://andy-yang-1.github.io/" target="_blank">Shuo Yang</a></h3>
-              <div class="affiliation">UC Berkeley</div>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/lvmin_zhang.jpg" alt="Lvmin Zhang">
-              <h3 class="name"><a href="https://lllyasviel.github.io/lvmin_zhang/" target="_blank">Lvmin Zhang</a></h3>
-              <div class="affiliation">Stanford</div>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/kelly_peng.jpeg" alt="Kelly Peng">
-              <h3 class="name"><a href="https://www.linkedin.com/in/kellyzpeng/" target="_blank">Kelly Peng</a></h3>
-              <div class="affiliation">First Intelligence</div>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/song_han.jpeg" alt="Song Han">
-              <h3 class="name"><a href="https://hanlab.mit.edu/songhan" target="_blank">Song Han</a></h3>
-              <div class="affiliation">MIT</div>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/kurt_keutzer.jpg" alt="Kurt Keutzer">
-              <h3 class="name"><a href="https://people.eecs.berkeley.edu/~keutzer/" target="_blank">Kurt Keutzer</a></h3>
-              <div class="affiliation">UC Berkeley</div>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="box contrib-card">
-              <img class="avatar" src="static/images/authors/akio_kodaira.jpeg" alt="Akio Kodaira">
-              <h3 class="name"><a href="https://scholar.google.com/citations?hl=ja&user=15X3cioAAAAJ" target="_blank">Akio Kodaira</a></h3>
-              <div class="affiliation">UC Berkeley</div>
-            </div>
+
+          <h3 class="title is-4">Motion-aware Noise Controller</h3>
+          <div class="content has-text-justified">
+            <p>
+              In live-streaming applications, high-speed motion frequently occurs, yet current video diffusion models struggle with such motion. To address this, we propose the Motion-aware Noise Controller, a training-free method that adapts noise rates based on input frame motion frequency. Specifically, we assess motion frequency by calculating the mean squared error (MSE) between successive frames and linearly map this to a noise rate using pre-determined statistical parameters. This method balances quality and movement continuity in live video-to-video live streaming.
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End Contributors Section -->
-
+<!-- End Methods -->
 
 <!--BibTex citation (moved after contributors) -->
   <section class="section hero is-light" id="BibTeX">
@@ -761,6 +657,7 @@
     </div>
   </div>
 </footer>
+
 
 <!-- Statcounter tracking code -->
   
