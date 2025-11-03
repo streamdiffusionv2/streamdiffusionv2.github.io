@@ -347,7 +347,7 @@
           </div>
         </div>
       <p class="has-text-centered has-text-grey is-size-8" style="margin-top:0.75rem;max-width:900px;margin-left:auto;margin-right:auto;">
-        From top-left to bottom-right: Reference video, StreamDiffusion, Causvid, StreamDiffusionV2. 
+        Video 1. From top-left to bottom-right: Reference video, StreamDiffusion, Causvid, StreamDiffusionV2. 
       </p>
       <p class="has-text-centered has-text-grey is-size-7" style="margin-top:0.75rem;max-width:900px;margin-left:auto;margin-right:auto;">
         Prompt: A futuristic boxer trains in a VR combat simulation, wearing a glowing full-body suit and visor. His punches shatter holographic enemies made of pixels and data streams, while the digital environment shifts between glitching neon arenas and simulated landscapes.
@@ -370,7 +370,7 @@
           </div>
         </div>
       <p class="has-text-centered has-text-grey is-size-8" style="margin-top:0.75rem;max-width:900px;margin-left:auto;margin-right:auto;">
-        From top-left to bottom-right: Reference video, StreamDiffusion, Causvid, StreamDiffusionV2. 
+        Video 2. From top-left to bottom-right: Reference video, StreamDiffusion, Causvid, StreamDiffusionV2. 
       </p>
       <p class="has-text-centered has-text-grey is-size-7" style="margin-top:0.75rem;max-width:900px;margin-left:auto;margin-right:auto;">
         Prompt: A highly detailed futuristic cybernetic bird, blending avian elegance with advanced robotics. Its feathers are metallic plates with iridescent reflections of blue and purple neon lights, each joint covered by intricate mechanical gears and wires. The eyes glow with a pulsating red core, scanning the environment like a high-tech sensor. The wings expand with layered steel feathers, partially transparent with holographic circuits flowing through them. The bird is perched on a glowing cyberpunk rooftop railing, with a vast futuristic city in the background filled with holographic billboards, flying drones, and neon-lit skyscrapers. The atmosphere is cinematic, ultra-realistic, and science-fiction inspired, combining photorealism with a high-tech futuristic style.
@@ -557,6 +557,71 @@
   </div>
 </section>
 
+<!-- Motivation -->
+<section class="section" id="motivation">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths has-text-centered">
+        <h2 class="title is-3">Motivation</h2>
+        <!-- 子标题左对齐，主标题不变 -->
+        <div class="has-text-left">
+          <img src="static/images/stream.png" alt="The overview pipeline of our StreamDiffusionV2." class="pipeline-image">
+          <p class="figure-caption">Fig. 1: Comparison between Batch and Streaming video generation.</p>
+          <div class="content has-text-justified">
+            <p>
+              Real-time video applications span diverse use cases with widely varying budgets for frame rate, resolution, latency, and motion. This heterogeneity shifts performance bottlenecks across different stages of the pipeline. We highlight four key bottlenecks below..
+            </p>
+          </div>
+
+          <h3 class="title is-4">Unmet Real-time SLOs</h3>
+          <img id="ttff" src="static/images/ttff.png" alt="The overview pipeline of our StreamDiffusionV2." class="pipeline-image" style="width:80%;height:auto;display:block;margin:0 auto;">
+          <p class="figure-caption">Fig. 2: Time to the first frame on H100 GPU.</p>
+          <div class="content has-text-justified">
+            <p>
+              Existing streaming systems adopt a fixed-input strategy, processing tens to hundreds of frames per forward pass to maximize throughput. For instance, CausVid and Self-Forcing process 81 frames per step. While this large-chunk design improves average throughput in offline settings, it fundamentally conflicts with the requirements of real-time streaming. We test the time to the first frame (TTFF) of these systems on an H100 GPU that the prior methods far exceed the required TTFF (about 1s), as shown in Fig. 2.
+            </p>
+          </div>
+
+          <h3 class="title is-4">Drift Accumulation in Long-horizon Generation</h3>
+          <div class="content has-text-justified">
+            <p>
+              Current “streaming” video systems are primarily adapted from offline, bidirectional clip generators. For example, CausVID derives from CogVideoX, and SelfForcing builds on Wan-2.1-T2V. These models are trained for short clips (5–10 seconds) and maintain coherence only within that range (see in Video 2).
+            </p>
+          </div>
+
+          <h3 class="title is-4">Quality Degration due to Motion Unawareness</h3>
+          <div class="content has-text-justified">
+            <p>
+              Different motion patterns in the input stream impose distinct tradeoffs between latency and visual quality. Fast motion requires conservative denoising to prevent tearing, ghosting, and blur, whereas slow or static scenes benefit from stronger refinement to recover details. Existing streaming pipelines rely on fixed noise schedules that ignore this variability, leading to temporal artifacts in high-motion regions and reduced visual fidelity in low-motion segments (see in Video 1).
+            </p>
+          </div>
+
+          <h3 class="title is-4">Poor GPU Scaling</h3>
+          <div class="columns is-vcentered is-multiline">
+            <div class="column is-half">
+              <figure class="image">
+                <img src="static/images/roofline.png" alt="Roofline" style="width:100%;height:auto;border-radius:8px;">
+              </figure>
+            </div>
+            <div class="column is-half">
+              <figure class="image">
+                <img src="static/images/com_cost.png" alt="Compute Cost" style="width:100%;height:auto;border-radius:8px;">
+              </figure>
+            </div>
+          </div>
+          <p class="figure-caption">Fig. 3: Left: Roofline analysis of sequence parallelism and our pipeline orchestration. Right: Communication consumption of various parallelism methods.</p>
+          <div class="content has-text-justified">
+            <p>
+              In live-streaming scenarios, strict per-frame deadlines hinder the scalability of conventional parallelization strategies for two key reasons: (i) communication latency in sequence parallelism significantly reduces potential speedup, and (ii) short-frame chunks drive the workload into a memorybound regime, as shown in Fig. 3, left. These effects are further amplified in real-time streaming, where efficient causal DiTs operate on short sequences (e.g., 4 frames per step), reducing per-frame computation and making communication overhead proportionally heavier (see Fig. 3, right).
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Motivation -->
 
 <!-- Methods -->
 <section class="section" id="methods">
@@ -568,36 +633,10 @@
         <div class="has-text-left">
           <h3 class="title is-4">Stream-living pipeline</h3>
           <img src="static/images/pipeline.png" alt="The overview pipeline of our StreamDiffusionV2." class="pipeline-image">
-          <p class="figure-caption">Fig. 1: The overview pipeline of our StreamDiffusionV2.</p>
+          <p class="figure-caption">Fig. 4: The overview pipeline of our StreamDiffusionV2.</p>
           <div class="content has-text-justified">
             <p>
               StreamDiffusionV2 is a synergy of system- and algorithm-level efforts to achieve stream-living based on video diffusion models. It includes: A dynamic scheduler for pipeline parallelism with stream batch, a StreamVAE and rolling KV, and a motion-aware controller.
-            </p>
-          </div>
-
-          <h3 class="title is-4">Pipeline-parallelism Stream-batch</h3>
-          <img src="static/images/parallel.png" alt="The detailed description of our Pipeline-parallelism Stream-batch architecture." class="parallel-image">
-          <p class="figure-caption">Fig. 2: The detailed description of our Pipeline-parallelism Stream-batch architecture.</p>
-          <div class="content has-text-justified">
-            <p>
-              StreamDiffusionV2 aims to cater to users at different scales, from individual creators with one or two GPUs to enterprise platform with more GPUs. We propose pipeline parallelism to offer users various options. This means dividing models among multiple GPUs. Without adaptation, pipeline parallelism alone does not enhance efficiency due to the compute-bound nature of video models. However, partitioning shifts workloads on GPUs to become memory-bound. Transforming the memory-bound inspires us to batch the pipeline for enhanced throughput. We propose a pipeline parallelism with stream batch, as shown in Fig. 2. This approach significantly improves throughput, as shown in Fig. 3 and Fig. 4.
-            </p>
-            <p>
-              In addition to the static partition, we find that VAE encoding and decoding create an unequal distribution of tasks across GPUs. To enhance throughput, we propose a scheduler that reallocates blocks across devices dynamically using inference-time measurements. These methods allow for competitive real-time generation performance on standard GPUs, thus reducing the barrier for practical implementation.
-            </p>
-          </div>
-
-          <!-- FPS results as Fig. 3 moved here, before Stream-VAE -->
-          <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
-          <p class="figure-caption">Fig. 3: FPS results of our system on H100 (with NVLink) and RTX 4090 GPUs (without NVLink), evaluated at a resolution of 832 &times; 480.</p>
-
-          <img src="static/images/fps_results_14b.png" alt="FPS Results" style="display:block;margin:0 auto;width:50%;height:auto;border-radius:12px;">
-          <p class="figure-caption">Fig. 4: FPS results of our system on H100 (with NVLink) and RTX 4090 GPUs (without NVLink), evaluated at a resolution of 512 &times; 512. This resolution is used in all Web UI demos.</p>
-
-          <h3 class="title is-4">Stream-VAE</h3>
-          <div class="content has-text-justified">
-            <p>
-              Stream-VAE is a low-latency implementation of Video VAE for real-time video generation. Unlike current approaches, which process long video sequences and introduce significant latency, Stream-VAE handles a small video chunk each time. Specifically, four video frames are compressed into a single latent frame during the process. In addition, the cached features are utilized in every 3D convolution module of the VAE to maintain temporal consistency.  Stream-VAE ensures temporal consistency while supporting efficient live streaming generation.
             </p>
           </div>
 
@@ -609,13 +648,43 @@
           </div>
 
           <h3 class="title is-4">Motion-aware Noise Controller</h3>
-          <img src="static/images/motion.png" alt="The overview pipeline of our StreamDiffusionV2." style="display:block;margin:0 auto;width:70%;height:auto;border-radius:12px;">
-          <p class="figure-caption">Fig. 1: The overview pipeline of our StreamDiffusionV2.</p>
+          <img src="static/images/motion.png" alt="Example of Motion Etimation and Dynamic Noise Rate" style="display:block;margin:0 auto;width:70%;height:auto;border-radius:12px;">
+          <p class="figure-caption">Fig. 5: The overview pipeline of our StreamDiffusionV2.</p>
           <div class="content has-text-justified">
             <p>
               In live-streaming applications, high-speed motion frequently occurs, yet current video diffusion models struggle with such motion. To address this, we propose the Motion-aware Noise Controller, a training-free method that adapts noise rates based on input frame motion frequency. Specifically, we assess motion frequency by calculating the mean squared error (MSE) between successive frames and linearly map this to a noise rate using pre-determined statistical parameters. This method balances quality and movement continuity in live video-to-video live streaming.
             </p>
           </div>
+
+          <h3 class="title is-4">Stream-VAE</h3>
+          <div class="content has-text-justified">
+            <p>
+              Stream-VAE is a low-latency implementation of Video VAE for real-time video generation. Unlike current approaches, which process long video sequences and introduce significant latency, Stream-VAE handles a small video chunk each time. Specifically, four video frames are compressed into a single latent frame during the process. In addition, the cached features are utilized in every 3D convolution module of the VAE to maintain temporal consistency.  Stream-VAE ensures temporal consistency while supporting efficient live streaming generation.
+            </p>
+          </div>
+
+          <h3 class="title is-4">Multi-Pipeline Orchestration Scaling</h3>
+          <img src="static/images/parallel.png" alt="The detailed description of our Pipeline-parallelism Stream-batch architecture." class="parallel-image">
+          <p class="figure-caption">Fig. 6: The detailed description of our Pipeline-parallelism Stream-batch architecture.</p>
+          <div class="content has-text-justified">
+            <p>
+              To improve system throughput on multi-GPU platforms, we propose a scalable pipeline orchestration for parallel inference. Specifically, the DiT blocks are partitioned across devices. As illustrated in Fig. 6, each device processes its input sequence as a micro-step and transmits the results to the next stage within a ring structure. These enable consecutive stages of the model to operate concurrently in a pipeline-parallel manner, achieving near-linear acceleration for DiT throughput.
+            </p>
+            <p>
+              In addition to the static partition, we find that VAE encoding and decoding create an unequal distribution of tasks across GPUs. To enhance throughput, we propose a scheduler that reallocates blocks across devices dynamically using inference-time measurements. These methods allow for competitive real-time generation performance on standard GPUs, thus reducing the barrier for practical implementation.
+            </p>
+          </div>
+
+          <!-- FPS results as Fig. 3 moved here, before Stream-VAE -->
+          <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
+          <p class="figure-caption">Fig. 7: The throughput results of the 1.3B model on H100 GPUs (with NVLink) and 4090 GPUs (with PCIe)</p>
+
+          <img src="static/images/fps_results_14b.png" alt="FPS Results" style="display:block;margin:0 auto;width:50%;height:auto;border-radius:12px;">
+          <p class="figure-caption">Fig. 8: The throughput results of the 14B model on H100 GPUs (communicate through NVLink)</p>
+
+          <img src="static/images/sp_inference.png" alt="FPS Results" style="display:block;margin:0 auto;width:80%;height:auto;border-radius:12px;">
+          <p class="figure-caption">Fig. 9: Acceleration rate of different approaches on various resolutions. Left: Testing the acceleration rate of DiT only. Right: Testing the acceleration of the whole pipeline (with VAE).</p>
+          
         </div>
       </div>
     </div>
