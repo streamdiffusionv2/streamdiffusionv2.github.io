@@ -231,24 +231,26 @@
             <div class="is-size-5 publication-authors">
   <span class="author-block"><a href="https://jerryfeng2003.github.io/" target="_blank" rel="noopener" class="author-link">Tianrui Feng</a><sup>*,1</sup>,</span>
   <span class="author-block"><a href="https://scholar.google.com/citations?user=C6kPjgwAAAAJ&hl" target="_blank" rel="noopener" class="author-link">Zhi Li</a><sup>1</sup>,</span>
+  <span class="author-block"><a href="https://andy-yang-1.github.io/" target="_blank" rel="noopener" class="author-link">Shuo Yang</a><sup>1</sup>,</span>
   <span class="author-block"><a href="https://haochengxi.github.io/" target="_blank" rel="noopener" class="author-link">Haocheng Xi</a><sup>1</sup>,</span>
   <span class="author-block"><a href="https://lmxyy.me/" target="_blank" rel="noopener" class="author-link">Muyang Li</a><sup>2</sup>,</span>
-  <span class="author-block"><a href="https://andy-yang-1.github.io/" target="_blank" rel="noopener" class="author-link">Shuo Yang</a><sup>1</sup>,</span>
   <span class="author-block"><a href="https://xiuyuli.com/" target="_blank" rel="noopener" class="author-link">Xiuyu Li</a><sup>1</sup>,</span>
   <span class="author-block"><a href="https://lllyasviel.github.io/lvmin_zhang/" target="_blank" rel="noopener" class="author-link">Lvmin Zhang</a><sup>3</sup>,</span>
-  <span class="author-block"><a href="https://www.linkedin.com/in/kellyzpeng/" target="_blank" rel="noopener" class="author-link">Kelly Peng</a><sup>4</sup>,</span>
+  <span class="author-block"><a href="https://www.linkedin.com/in/keting-yang" target="_blank" rel="noopener" class="author-link">Keting Yang</a><sup>4</sup>,</span>
+  <span class="author-block"><a href="https://www.linkedin.com/in/kellyzpeng/" target="_blank" rel="noopener" class="author-link">Kelly Peng</a><sup>5</sup>,</span>
   <span class="author-block"><a href="https://hanlab.mit.edu/songhan" target="_blank" rel="noopener" class="author-link">Song Han</a><sup>2</sup>,</span>
   <span class="author-block"><a href="http://graphics.stanford.edu/~maneesh/" target="_blank" rel="noopener" class="author-link">Maneesh Agrawala</a><sup>3</sup>,</span>
   <span class="author-block"><a href="https://people.eecs.berkeley.edu/~keutzer/" target="_blank" rel="noopener" class="author-link">Kurt Keutzer</a><sup>1</sup>,</span>
   <span class="author-block"><a href="https://scholar.google.com/citations?hl=ja&user=15X3cioAAAAJ" target="_blank" rel="noopener" class="author-link">Akio Kodaira</a><sup>1</sup>,</span>
-  <span class="author-block"><a href="https://www.chenfengx.com/" target="_blank" rel="noopener" class="author-link">Chenfeng Xu</a><sup>†,1,5</sup></span>
+  <span class="author-block"><a href="https://www.chenfengx.com/" target="_blank" rel="noopener" class="author-link">Chenfeng Xu</a><sup>†,1,6</sup></span>
 </div>
             <div class="is-size-6 affiliations-note">
               <span><sup>1</sup> UC Berkeley</span> ·
               <span><sup>2</sup> MIT</span> ·
               <span><sup>3</sup> Stanford University</span> ·
-              <span><sup>4</sup> First Intelligence</span> ·
-              <span><sup>5</sup> UT Austin</span>
+              <span><sup>4</sup> Independent Researcher</span> ·
+              <span><sup>5</sup> First Intelligence</span> ·
+              <span><sup>6</sup> UT Austin</span>
             </div>
             <!-- 通信作者和project lead信息 -->
 <div class="has-text-centered" style="margin-top: 0.5em; line-height: 1.4;">
@@ -302,6 +304,15 @@
 
               <!-- 保留代码按钮展示 -->
                 <!-- TODO: Replace with your GitHub repository URL -->
+                  <span class="link-block">
+                    <a href="https://streamdiffusionv2.github.io/static/pdfs/StreamDiffusionV2.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
                 <span class="link-block">
                   <a href="https://github.com/chenfengxu714/StreamDiffusionV2" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
@@ -347,23 +358,7 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p>
-  Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Our first release, 
-  <strong><a href="https://github.com/cumulo-autumn/StreamDiffusion" target="_blank" rel="noopener">StreamDiffusion</a></strong>, 
-  has powered efficient and creative live-streaming products (e.g., 
-  <a href="https://daydream.live/?utm_source=LivepeerWebsite" target="_blank" rel="noopener">Daydream</a>, 
-  <a href="https://derivative.ca/tags/streamdiffusion" target="_blank" rel="noopener">TouchDesigner</a>) but hit limits on temporal consistency due to its image-based design. 
-  Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline systems primarily optimize throughput via large-batch processing. 
-  In contrast, live online streaming faces strict real-time constraints with small batches: every frame must meet a per-frame deadline with low jitter. Moreover, the online system must dynamically adapt its workload (e.g., steps, resolution, effects) to track user query rates and sustain target throughput under varying load.
-</p>
-
-
-          <p>
-            We bridge this gap with <strong>StreamDiffusionV2</strong>: a fully open-source, real-time pipeline for interactive live streams with video diffusion models. 
-            The system introduces StreamVAE, synced rolling KV, dynamic pipeline parallelism, and a motion-aware noise controller to remain stable under dynamic inputs. 
-            To serve users across hardware tiers, StreamDiffusionV2 scales seamlessly across diverse GPU environments and supports flexible denoising steps (e.g., 1–4 steps). 
-            Without TensorRT or quantization, StreamDiffusionV2 reaches 42 FPS on 4× H100 with a 4-step model, and 16.6 (resp. 8.6) FPS on 2× (resp. single) RTX 4090 with a 1-step model—making state-of-the-art generative live streaming practical and accessible, from individual creators to enterprise platforms.
-          </p>
+          <p>Generative models are reshaping the live-streaming industry by redefining how content is created, styled, and delivered. Previous image-based streaming diffusion models have powered efficient and creative live streaming products but have hit limits on temporal consistency due to the foundation of image-based designs. Recent advances in video diffusion have markedly improved temporal consistency and sampling efficiency for offline generation. However, offline generation systems primarily optimize throughput by batching large workloads. In contrast, live online streaming operates under strict service-level objectives (SLOs): time-to-first-frame must be minimal, and every frame must meet a per-frame deadline with low jitter. Besides, scalable multi-GPU serving for real-time streams remains largely unresolved so far. To address this, we present <strong>StreamDiffusionV2</strong>, a <em>training-free</em> pipeline for interactive live streaming with video diffusion models. StreamDiffusionV2 integrates an SLO-aware batching scheduler and a block scheduler, together with a sink-token–guided rolling KV cache, a motion-aware noise controller, and other system-level optimizations. Moreover, we introduce a scalable pipeline orchestration that parallelizes the diffusion process across denoising steps and network layers, achieving near-linear FPS scaling without violating latency guarantees. The system scales seamlessly across heterogeneous GPU environments and supports flexible denoising steps (e.g., 1–4), enabling both ultra-low-latency and higher-quality modes. Without TensorRT or quantization, StreamDiffusionV2 renders the first frame within 0.5s and attains 58.28 FPS with a 14B-parameter model and 64.52 FPS with a 1.3B-parameter model on four H100 GPUs. Even when increasing denoising steps to improve quality, it sustains 31.62 FPS (14B) and 61.58 FPS (1.3B), making state-of-the-art generative live streaming practical and accessible—from individual creators to enterprise-scale platforms.</p>
         </div>
       </div>
     </div>
@@ -549,6 +544,123 @@
     </div>
   </div>
 </section>
+<!-- Live-Streaming Demo -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h3 class="title is-5" style="margin-top: 2.5em;">StreamDiffusionV2 achieves better quality and temporal consistency</h3>
+    <p class="has-text-centered" style="margin-bottom: 1.5em;">
+      We compare StreamDiffusionV2 with prior work StreamDiffusion and baseline model CausVid. Our method achieves superior visual quality and temporal consistency while maintaining real-time performance.
+    </p>
+
+    <div class="columns is-multiline is-centered">
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/bird_input.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">Reference Video</p>
+      </div>
+
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/bird_v1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">StreamDiffusion</p>
+      </div>
+
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/bird_causvid.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">CausVid</p>
+      </div>
+
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/bird_default.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">StreamDiffusionV2 (<strong>Ours</strong>)</p>
+      </div>
+    </div>
+
+    <p class="has-text-centered has-text-grey is-size-7" style="margin-top:0.75rem;max-width:900px;margin-left:auto;margin-right:auto;">
+      A highly detailed futuristic cybernetic bird, blending avian elegance with advanced robotics. Its feathers are metallic plates with iridescent reflections of blue and purple neon lights, each joint covered by intricate mechanical gears and wires. The eyes glow with a pulsating red core, scanning the environment like a high-tech sensor. The wings expand with layered steel feathers, partially transparent with holographic circuits flowing through them. The bird is perched on a glowing cyberpunk rooftop railing, with a vast futuristic city in the background filled with holographic billboards, flying drones, and neon-lit skyscrapers. The atmosphere is cinematic, ultra-realistic, and science-fiction inspired, combining photorealism with a high-tech futuristic style.
+    </p>
+
+    <div class="columns is-multiline is-centered">
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/boxing_input.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">Reference Video</p>
+      </div>
+
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/boxing_v1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">StreamDiffusion</p>
+      </div>
+
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/boxing_blur.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">CausVid</p>
+      </div>
+
+      <div class="column is-half-tablet is-half-desktop">
+        <div class="video-card">
+          <div class="video-container">
+            <video controls muted autoplay loop preload="metadata" class="demo-video">
+              <source src="static/videos/boxing_small.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="has-text-centered is-size-10 has-text-grey" style="margin-top:0.5rem;">StreamDiffusionV2 (<strong>Ours</strong>)</p>
+      </div>
+    </div>
+
+    <p class="has-text-centered has-text-grey is-size-7" style="margin-top:0.75rem;max-width:900px;margin-left:auto;margin-right:auto;">
+      A futuristic boxer trains in a VR combat simulation, wearing a glowing full-body suit and visor. His punches shatter holographic enemies made of pixels and data streams, while the digital environment shifts between glitching neon arenas and simulated landscapes.
+    </p>
+  </div>
+</section>
 <!-- End demo -->
 
 
@@ -586,7 +698,7 @@
           <img src="static/images/fps_results.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
           <p class="figure-caption">Fig. 3: FPS results of our system on H100 (with NVLink) and RTX 4090 GPUs (without NVLink), evaluated at a resolution of 832 &times; 480.</p>
 
-          <img src="static/images/fps_results_512.png" alt="FPS Results" style="width:100%;height:auto;border-radius:12px;">
+          <img src="static/images/fps_results_14b.png" alt="FPS Results" style="display:block;margin:0 auto;width:50%;height:auto;border-radius:12px;">
           <p class="figure-caption">Fig. 4: FPS results of our system on H100 (with NVLink) and RTX 4090 GPUs (without NVLink), evaluated at a resolution of 512 &times; 512. This resolution is used in all Web UI demos.</p>
 
           <h3 class="title is-4">Stream-VAE</h3>
@@ -604,6 +716,8 @@
           </div>
 
           <h3 class="title is-4">Motion-aware Noise Controller</h3>
+          <img src="static/images/motion.png" alt="The overview pipeline of our StreamDiffusionV2." style="display:block;margin:0 auto;width:70%;height:auto;border-radius:12px;">
+          <p class="figure-caption">Fig. 1: The overview pipeline of our StreamDiffusionV2.</p>
           <div class="content has-text-justified">
             <p>
               In live-streaming applications, high-speed motion frequently occurs, yet current video diffusion models struggle with such motion. To address this, we propose the Motion-aware Noise Controller, a training-free method that adapts noise rates based on input frame motion frequency. Specifically, we assess motion frequency by calculating the mean squared error (MSE) between successive frames and linearly map this to a noise rate using pre-determined statistical parameters. This method balances quality and movement continuity in live video-to-video live streaming.
