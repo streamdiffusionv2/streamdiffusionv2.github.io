@@ -122,6 +122,15 @@ body {
     line-height: 1.1 !important;
 }
 
+.publication-award-line {
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
 /* Hero subtext under the code button */
 .hero-subtext {
   margin-top: 0.75rem;
@@ -670,6 +679,11 @@ code {
     line-height: 1.2 !important;
     margin-bottom: 1.5rem !important;
   }
+
+  .publication-award-line {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
   
   .publication-authors {
     font-size: 1rem !important;
@@ -716,6 +730,10 @@ code {
 @media screen and (max-width: 480px) {
   .publication-title {
     font-size: 2rem !important;
+  }
+
+  .publication-award-line {
+    font-size: 1.2rem;
   }
   
   .hero-body {
@@ -805,6 +823,3 @@ a:focus {
     box-shadow: none !important;
   }
 }
-
-
-
